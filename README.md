@@ -1,6 +1,6 @@
 # Mixins
 
-This is low level mixin for modifying existing java classes.
+This is low level, light weight mixin for modifying existing java classes.
 This concept was inspired by
 [SpongePowered Mixin](https://github.com/SpongePowered/Mixin).
 
