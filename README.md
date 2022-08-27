@@ -171,9 +171,9 @@ public class CustomClassLoaderMixin implements Mixin {
 
 Now we can define new class from our `CustomClassLoader` using reflection.
 ```java
-ClassLoader cl = getCustomClassLoader();
+CustomClassLoader cl = getCustomClassLoader();
 
-Method createClassMethod = cl.getClass().getDeclaredMethod("createClass", String.class, byte[].class);
+Method createClassMethod = cl.getClass().getDeclared("createClass", String.class, byte[].class);
 Class<?> newClass = createClassMethod.invoke(cl, "new.class", classByteCode);
 ```
 
