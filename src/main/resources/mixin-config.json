@@ -1,7 +1,0 @@
-{
-  "mixins" : [
-    "com.joojn.mixin.TargetClassMixin"
-  ]
-
-
-}
