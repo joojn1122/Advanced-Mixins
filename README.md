@@ -110,9 +110,11 @@ This will create `newMethod(java/lang/String;)V` in target class.
 ### Shadowing methods / fields
 
 Shadowing method / field is similar to the MethodSelecting
-Lets say we want to create `createClass(java/lang/String;[B)java/lang/Class;`
-which is basically `defineClass(...)` but its protected 
-and unable to invoke using reflection in `ClassLoader` class.
+Lets say we want to create `createClass(java/lang/String;[B)java/lang/Class;` in some
+CustomClassLoader which is basically `defineClass(...)` but that method is protected 
+and unable to invoke using reflection.
+
+Be aware that this won't work on ClassLoader itself because java agents doesn't load java standard classes. *(I think)*
 
 ```java
 import com.joojn.mixins.Mixin;
@@ -122,7 +124,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 
-public class ClassLoaderMixin implements Mixin {
+public class CustomClassLoaderMixin implements Mixin {
 
     @Shadow(name = "defineClass__")
     public native Class<?> defineClass(String name,
@@ -162,14 +164,14 @@ public class ClassLoaderMixin implements Mixin {
     // get target class
     @Override
     public String getTargetClass() {
-        return ClassLoader.class.getName();
+        return "some.custom.CustomClassLoader";
     }
 }
 ```
 
-Now we can simply define new class from any `ClassLoader` using reflection.
+Now we can define new class from our `CustomClassLoader` using reflection.
 ```java
-ClassLoader cl = getClassLoader();
+ClassLoader cl = getCustomClassLoader();
 
 Method createClassMethod = cl.getClass().getDeclaredMethod("createClass", String.class, byte[].class);
 Class<?> newClass = createClassMethod.invoke(cl, "new.class", classByteCode);
