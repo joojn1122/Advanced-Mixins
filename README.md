@@ -8,8 +8,8 @@ You can download the latest release in [Releases](../../releases).
 I'll add maven dependency later.
 
 ### Development
-The code is terrible and really hard to read so please don't judge me ¯\_(ツ)_/¯.
-**It's still in the development.**
+The code is terrible and really hard to read so please don't judge me ¯\\\_(ツ)_/¯.
+**It's still in development.**
 
 It has a lot of bugs for example you can't use lambda expressions in the method.
 
@@ -47,10 +47,9 @@ public class TestClass implements Mixin {
         name is not the method name,
         but the name you are targeting 
         also, the method names doesn't matter
-        <h1> ! IMPORTANT !
+        ! IMPORTANT !
         @MixinMethodFor has always return type of MethodNode
         and 1 param of ClassNode
-        </h1>
      */ 
     @MixinMethodFor(name = "someName")
     public MethodNode someMethodNameTargeter(ClassNode cn) 
@@ -138,11 +137,10 @@ public class ClassLoaderMixin implements Mixin {
 
      this is selector for the defineClass (same name)
 
-     <h1> ! IMPORTANT !
+     ! IMPORTANT !
      @shadowFor has return type of MethodInsNode or FieldInsNode 
      (if you are targeting method or field)
      and always 1 param of ClassNode
-     </h1>
      */
     @ShadowFor(name = "defineClass__")
     public MethodInsnNode getDefineClass(ClassNode cn)
@@ -231,6 +229,6 @@ I'll probably make a second version without these selectors, so it's easier to u
 I hope you understood everything, if not you can contact me 
 on discord `joojn#5485` or open issue request.
 
-I'll make youtube video for setup in the future.
+I'll make YouTube video for setup in the future.
 
 **Also, any help is appreciated, so you can create a pull request.**
