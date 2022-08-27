@@ -39,34 +39,34 @@ one which tells the program which method to target and second to do the modifyin
 ```java
 import com.joojn.mixins.Mixin;
 import com.joojn.mixins.annotation.MixinMethodFor;
-import jdk.internal.org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.MethodNode;
 
 public class TestClass implements Mixin {
 
     /**
-        name is not the method name,
-        but the name you are targeting 
-        also, the method names doesn't matter
-        ! IMPORTANT !
-        @MixinMethodFor has always return type of MethodNode
-        and 1 param of ClassNode
-     */ 
+     name is not the method name,
+     but the name you are targeting 
+     also, the method names doesn't matter
+     ! IMPORTANT !
+     @MixinMethodFor has always return type of MethodNode
+     and 1 param of ClassNode
+     */
     @MixinMethodFor(name = "someName")
-    public MethodNode someMethodNameTargeter(ClassNode cn) 
+    public MethodNode someMethodNameTargeter(ClassNode cn)
     {
-        for(MethodNode method : cn.methods)
+        for (MethodNode method : cn.methods) 
         {
             // let's say we want to target first void with no params
             // method in the class
             // so the #someMethodName() has to be void with no params
-            if(
-                    method.desc.equals("()V")  
-            )                                  
-            {
+            if (
+                    method.desc.equals("()V")
+            ) {
                 return method;
             }
         }
-        
+
         // if not found, return null (if null is returned this method is ignored)
         return null;
     }
@@ -74,17 +74,16 @@ public class TestClass implements Mixin {
     // same name, just to connect them together
     // the  only thing that matters, is the params and return type
     // then we can specify 
-    
+
     // override = false/true, default false -> if the whole method should be overridden 
     // atLine = int, default = 0 (start) -> at which line of method 
     // this should be injected (negative numbers works from other side => -1 = end)
     // if override is true, atLine is ignored
     @MixinMethod(name = "someName", override = true)
-    public void someMethodName()
-    {
+    public void someMethodName() {
         System.out.println("Injected!");
     }
-    
+
     @Override
     public String getTargetClass() {
         return "some.target.class";
