@@ -11,7 +11,7 @@ This concept was inspired by
 <repositories>
     <repository>
         <id>Mixins</id>
-        <url>https://github.com/joojn1122/Mixins/tree/main/repository</url>
+        <url>https://raw.github.com/joojn1122/Mixins/main/repository</url>
     </repository>
 </repositories>
 
