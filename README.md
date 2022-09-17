@@ -1,19 +1,49 @@
 # Mixins
 
-This is low level, light weight mixin for modifying existing java classes.
+This is low level mixin for modifying existing java classes.
 This concept was inspired by
 [SpongePowered Mixin](https://github.com/SpongePowered/Mixin).
 
-You can download the latest release in [Releases](../../releases).
-I'll add maven dependency later.
+## Add to projects
 
-### Development
+### Maven
+```xml
+<repositories>
+    <repository>
+        <id>Mixins</id>
+        <url>https://github.com/joojn1122/Mixins/tree/main/repository</url>
+    </repository>
+</repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>com.joojn</groupId>
+        <artifactId>Mixins</artifactId>
+        <version>Version (Can be found in repository folder)</version>
+    </dependency>
+</dependencies>
+```
+
+### Gradle
+```gradle
+repositories {
+    maven { url 'https://github.com/joojn1122/Mixins/tree/main/repository' }
+}
+
+dependencies {
+    implementation 'com.joojn:Mixins:Version'
+}
+```
+
+Or you can download it from [Releases](../../releases).
+
+## Development
 The code is terrible and really hard to read so please don't judge me ¯\\\_(ツ)_/¯.
 **It's still in development.**
 
 It has a lot of bugs for example you can't use lambda expressions in the method.
 
-### To add target mixin
+## To add target mixin
 In resources folder you will need to create file `mixin-config.json`,
 which looks like this
 
@@ -32,7 +62,7 @@ Then your class has to implement `com.joojn.mixins.Mixin`
 
 **Override** `getTargetClass()` with class you want to target.
 
-### Modifying existing method
+## Modifying existing method
 To modify already existing method you need 2 methods,
 one which tells the program which method to target and second to do the modifying
 
@@ -91,7 +121,7 @@ public class TestClass implements Mixin {
 }
 ```
 
-### Creating new method
+## Creating new method
 
 This is pretty self-explanatory
 
@@ -107,14 +137,12 @@ This will create `newMethod(java/lang/String;)V` in target class.
 
 `@MixinNewField` doesn't exist because I don't think it has any usage.
 
-### Shadowing methods / fields
+## Shadowing methods / fields
 
 Shadowing method / field is similar to the MethodSelecting
-Lets say we want to create `createClass(java/lang/String;[B)java/lang/Class;` in some
-CustomClassLoader which is basically `defineClass(...)` but that method is protected 
-and unable to invoke using reflection.
-
-Be aware that this won't work on ClassLoader itself because java agents doesn't load java standard classes. *(I think)*
+Lets say we want to create `createClass(java/lang/String;[B)java/lang/Class;`
+which is basically `defineClass(...)` but its protected 
+and unable to invoke using reflection in `ClassLoader` class.
 
 ```java
 import com.joojn.mixins.Mixin;
@@ -124,7 +152,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 
-public class CustomClassLoaderMixin implements Mixin {
+public class ClassLoaderMixin implements Mixin {
 
     @Shadow(name = "defineClass__")
     public native Class<?> defineClass(String name,
@@ -164,16 +192,16 @@ public class CustomClassLoaderMixin implements Mixin {
     // get target class
     @Override
     public String getTargetClass() {
-        return "some.custom.CustomClassLoader";
+        return ClassLoader.class.getName();
     }
 }
 ```
 
-Now we can define new class from our `CustomClassLoader` using reflection.
+Now we can simply define new class from any `ClassLoader` using reflection.
 ```java
-CustomClassLoader cl = getCustomClassLoader();
+ClassLoader cl = getClassLoader();
 
-Method createClassMethod = cl.getClass().getDeclared("createClass", String.class, byte[].class);
+Method createClassMethod = cl.getClass().getDeclaredMethod("createClass", String.class, byte[].class);
 Class<?> newClass = createClassMethod.invoke(cl, "new.class", classByteCode);
 ```
 
