@@ -11,7 +11,7 @@ This concept was inspired by
 <repositories>
     <repository>
         <id>Mixins</id>
-        <url>https://raw.github.com/joojn1122/Mixins/main/repository</url>
+        <url>https://raw.github.com/joojn1122/Advanced-Mixins/main/repository</url>
     </repository>
 </repositories>
 
@@ -27,7 +27,7 @@ This concept was inspired by
 ### Gradle
 ```gradle
 repositories {
-    maven { url 'https://github.com/joojn1122/Mixins/tree/main/repository' }
+    maven { url 'https://github.com/joojn1122/Advanced-Mixins/tree/main/repository' }
 }
 
 dependencies {
