@@ -1,4 +1,4 @@
-# Mixins
+# Advanced Mixins
 
 This is low level mixin for modifying existing java classes.
 This concept was inspired by
