@@ -1,5 +1,7 @@
 # Advanced Mixins
 
+Also look at https://github.com/joojn1122/Mixins
+
 This is low level mixin for modifying existing java classes.
 This concept was inspired by
 [SpongePowered Mixin](https://github.com/SpongePowered/Mixin).
